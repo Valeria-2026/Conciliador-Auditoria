@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valeria Acuña - Auditoría de Valores V6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+
+    <header class="bg-[#020617] text-white p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full"></div>
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
+            <div>
+                <h1 class="text-3xl font-black tracking-tighter uppercase italic">
+                    <span class="text-blue-500">VA</span> Auditoría Pro
+                </h1>
+                <p class="text-slate-400 font-bold text-[10px] tracking-[0.5em] mt-1">SISTEMA DE CONCILIACIÓN MULTI-TABLA V6</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <div class="bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-full">
+                    <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Acceso Remoto vía GitHub</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 -mt-6">
+
+        <!-- Panel de Control Rápido -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="glass-panel p-4 rounded-2xl shadow-xl flex items-center gap-4 border-l-4 border-blue-500">
+                <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h1m-5 4a2 2 0 100-4 2 2 0 000 4zm11-1V5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase">Estado</h3>
+                    <p class="text-xs font-bold text-slate-700">Cloud Ready</p>
+                </div>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl shadow-xl flex items-center gap-4 border-l-4 border-indigo-500">
+                <div class="bg-indigo-100 p-2 rounded-lg text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase">Filtro</h3>
+                    <p class="text-xs font-bold text-slate-700">Inteligente Activo</p>
+                </div>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl shadow-xl flex items-center gap-4 border-l-4 border-emerald-500">
+                <div class="bg-emerald-100 p-2 rounded-lg text-emerald-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase">Seguridad</h3>
+                    <p class="text-xs font-bold text-slate-700">Datos Cifrados Local</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <div class="flex justify-between items-end px-2">
+                    <h2 class="text-xl font-black text-slate-800 uppercase italic">Banco</h2>
+                    <div id="countA" class="text-[10px] font-black bg-white px-3 py-1 rounded-full border border-slate-200">0 ITEMS</div>
+                </div>
+                <div class="bg-white p-2 rounded-3xl shadow-lg border border-slate-200">
+                    <textarea id="inputA" class="w-full h-80 p-6 rounded-2xl bg-slate-50 border-none text-[11px] font-mono focus:ring-0 custom-scrollbar" placeholder="Pega el extracto aquí..."></textarea>
+                    <div class="p-3 flex gap-2">
+                        <button onclick="document.getElementById('fileA').click()" class="flex-1 bg-slate-900 text-white text-[10px] font-black uppercase py-4 rounded-xl hover:bg-blue-600 transition">Importar Excel</button>
+                        <button onclick="limpiar('inputA')" class="px-4 bg-slate-100 text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition font-bold text-[10px]">X</button>
+                    </div>
+                </div>
+                <input type="file" id="fileA" class="hidden" accept=".xlsx, .xls, .csv">
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-end px-2">
+                    <h2 class="text-xl font-black text-slate-800 uppercase italic">Libros</h2>
+                    <div id="countB" class="text-[10px] font-black bg-white px-3 py-1 rounded-full border border-slate-200">0 ITEMS</div>
+                </div>
+                <div class="bg-white p-2 rounded-3xl shadow-lg border border-slate-200">
+                    <textarea id="inputB" class="w-full h-80 p-6 rounded-2xl bg-slate-50 border-none text-[11px] font-mono focus:ring-0 custom-scrollbar" placeholder="Pega tus registros aquí..."></textarea>
+                    <div class="p-3 flex gap-2">
+                        <button onclick="document.getElementById('fileB').click()" class="flex-1 bg-slate-900 text-white text-[10px] font-black uppercase py-4 rounded-xl hover:bg-indigo-600 transition">Importar Excel</button>
+                        <button onclick="limpiar('inputB')" class="px-4 bg-slate-100 text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition font-bold text-[10px]">X</button>
+                    </div>
+                </div>
+                <input type="file" id="fileB" class="hidden" accept=".xlsx, .xls, .csv">
+            </div>
+        </div>
+
+        <div class="mt-12 flex flex-col items-center gap-6">
+            <button onclick="procesar()" class="bg-blue-600 text-white px-24 py-6 rounded-2xl font-black uppercase tracking-[0.3em] shadow-2xl shadow-blue-200 hover:scale-105 transition-all active:scale-95">
+                Procesar Auditoría
+            </button>
+            <div class="flex gap-6">
+                <label class="flex items-center gap-2 cursor-pointer bg-white px-4 py-2 rounded-full border border-slate-200">
+                    <input type="checkbox" id="ignorarCentavos" class="w-4 h-4 rounded text-blue-600">
+                    <span class="text-[9px] font-black text-slate-500 uppercase">Ignorar Centavos</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer bg-white px-4 py-2 rounded-full border border-slate-200">
+                    <input type="checkbox" id="autoFiltroLey" checked class="w-4 h-4 rounded text-blue-600">
+                    <span class="text-[9px] font-black text-slate-500 uppercase">Limpiar CUIT/Ley</span>
+                </label>
+            </div>
+        </div>
+
+        <div id="results" class="mt-16 hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-8 rounded-3xl shadow-xl border-b-4 border-emerald-500">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2 italic">Conciliados</p>
+                    <div id="resMatch" class="text-5xl font-black text-slate-800">0</div>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-xl border-b-4 border-rose-500">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2 italic">Diferencias</p>
+                    <div id="resDiff" class="text-5xl font-black text-slate-800">0</div>
+                </div>
+                <div class="bg-[#020617] p-8 rounded-3xl shadow-xl border-b-4 border-blue-500">
+                    <p class="text-[10px] font-black text-blue-400 uppercase mb-2 italic">Desfase Neto</p>
+                    <div id="resNeto" class="text-4xl font-black text-white">$ 0,00</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h4 class="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-6 px-4 italic underline decoration-rose-200 underline-offset-8">Pendientes Banco</h4>
+                    <div id="listA" class="space-y-3"></div>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-6 px-4 italic underline decoration-indigo-200 underline-offset-8">Pendientes Libros</h4>
+                    <div id="listB" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function handleFile(inputId, fileId) {
+            document.getElementById(fileId).addEventListener('change', (e) => {
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    const wb = XLSX.read(evt.target.result, { type: 'binary' });
+                    let allContent = "";
+                    wb.SheetNames.forEach(name => {
+                        allContent += XLSX.utils.sheet_to_csv(wb.Sheets[name]) + "\n";
+                    });
+                    document.getElementById(inputId).value = allContent;
+                };
+                reader.readAsBinaryString(e.target.files[0]);
+            });
+        }
+
+        handleFile('inputA', 'fileA');
+        handleFile('inputB', 'fileB');
+
+        function limpiar(id) { document.getElementById(id).value = ""; }
+
+        function extraer(texto) {
+            let t = texto;
+            if(document.getElementById('autoFiltroLey').checked) {
+                t = t.replace(/(20|23|24|27|30|33)-\d{8}-\d/g, ' '); 
+                t = t.replace(/25\.?413/g, ' '); 
+            }
+            const regex = /(-?\d[\d\.]*,\d{2})|(-?\d[\d,]*\.\d{2})/g;
+            const matches = t.match(regex) || [];
+            return matches.map(m => {
+                let n = m.replace(/\./g, '').replace(',', '.');
+                if(document.getElementById('ignorarCentavos').checked) {
+                    return Math.floor(Math.abs(parseFloat(n))).toString();
+                }
+                return parseFloat(n).toFixed(2);
+            }).filter(n => Math.abs(parseFloat(n)) > 0.01);
+        }
+
+        function procesar() {
+            const a = extraer(document.getElementById('inputA').value);
+            const b = extraer(document.getElementById('inputB').value);
+            document.getElementById('countA').innerText = `${a.length} ITEMS`;
+            document.getElementById('countB').innerText = `${b.length} ITEMS`;
+
+            let matches = 0;
+            let poolB = [...b];
+            let diffA = [];
+            a.forEach(val => {
+                const idx = poolB.indexOf(val);
+                if(idx !== -1) { poolB.splice(idx, 1); matches++; }
+                else { diffA.push(val); }
+            });
+
+            const diffB = poolB;
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('resMatch').innerText = matches;
+            document.getElementById('resDiff').innerText = diffA.length + diffB.length;
+
+            const sumA = diffA.reduce((acc, curr) => acc + parseFloat(curr), 0);
+            const sumB = diffB.reduce((acc, curr) => acc + parseFloat(curr), 0);
+            document.getElementById('resNeto').innerText = `$ ${Math.abs(sumA - sumB).toLocaleString('es-AR', {minimumFractionDigits:2})}`;
+
+            renderList('listA', diffA, 'text-rose-700');
+            renderList('listB', diffB, 'text-indigo-700');
+            window.scrollTo({ top: document.getElementById('results').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        function renderList(id, items, cls) {
+            const container = document.getElementById(id);
+            container.innerHTML = items.length === 0 ? '<p class="text-[10px] text-slate-400 p-4">Todo conciliado</p>' : '';
+            items.sort((x, y) => y - x).forEach(v => {
+                const div = document.createElement('div');
+                div.className = `p-4 rounded-xl border bg-white shadow-sm flex justify-between items-center ${cls}`;
+                div.innerHTML = `<span class="font-mono font-black">$ ${parseFloat(v).toLocaleString('es-AR', {minimumFractionDigits:2})}</span>`;
+                container.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
